@@ -1,4 +1,6 @@
 {
+    "name": "salubcosta/tdd",
+    "description": "Projeto do curso PHP com testes e tdd da codeexperts",
     "require": {
         "phpunit/phpunit": "^9.5"
     },
