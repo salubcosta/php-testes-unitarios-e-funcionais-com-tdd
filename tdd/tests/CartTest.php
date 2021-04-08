@@ -22,11 +22,24 @@ class CartTest extends TestCase
         unset($this->cart, $this->product);
     }
 
-    public function testClasseCarrinhoExiste()
+    // public function testClasseCarrinhoExiste()
+    // {
+    //     $class = class_exists('\\Code\\Cart');
+
+    //     $this->assertTrue($class);
+    // }
+
+    // Todos os testes da classe só serão executados atender esta condição: class_exists
+    protected function assertPreConditions(): void
     {
         $class = class_exists('\\Code\\Cart');
 
         $this->assertTrue($class);
+    }
+
+    protected function assertPostConditions(): void
+    {
+        // Executa sempre depois do teste e o método tearDown
     }
 
     public function testAdicaoDeProdutosNoCarrinho()
@@ -78,5 +91,23 @@ class CartTest extends TestCase
 
         $this->assertEquals(2, $cart->getTotalProducts());
         $this->assertEquals(400, $cart->getTotalPurchases());
+    }
+
+    public function testIncompleto()
+    {
+        $this->assertTrue(true);
+        $this->markTestIncomplete('Teste não está completo');
+    }
+
+    /**
+     * @requires PHP == 5.3
+     */
+    public function testSeFeatureEspecificaParaVersao53PHPTrabalhaDeFormaEsperada()
+    {
+        // if(PHP_VERSION > 7) {
+        //     $this->markTestSkipped('Só exeuta nas versoes abaixo do PHP 7');
+        // }
+
+        return $this->assertTrue(true);
     }
 }
