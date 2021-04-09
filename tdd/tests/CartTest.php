@@ -63,12 +63,14 @@ class CartTest extends TestCase
 
     public function testSeValoresDeProdutoNoCarrinhoEstaoCorretosConformePassados()
     {
-        $product = ($this->product)
-            ->setName('Product 01')
-            ->setPrice(200)
-            ->setSlug('product-01');
+        // $product = ($this->product)
+        //     ->setName('Product 01')
+        //     ->setPrice(200)
+        //     ->setSlug('product-01');
 
-        $cart = ($this->cart)->addProduct($product);
+        $productStub = $this->getStubProduct();
+
+        $cart = ($this->cart)->addProduct($productStub);
 
         $this->assertEquals('Product 01', $cart->getProducts()[0]->getName());
         $this->assertEquals(200, $cart->getProducts()[0]->getPrice());
@@ -109,5 +111,27 @@ class CartTest extends TestCase
         // }
 
         return $this->assertTrue(true);
+    }
+
+    public function testSeLogESalvoQuandoInformadoParaAAdicaoDeProduto()
+    {
+        $cart = new Cart();
+
+        $logMock = $this->getMockBuilder(Log::class)
+                        ->onlyMethods(['log'])
+                        ->getMock();
+        $logMock->expects($this->once())->method('log')->with($this->equalTo('Adicionando produto no carrinho'));
+
+        $cart->addProduct($this->getStubProduct(), $logMock);
+    }
+
+    private function getStubProduct()
+    {
+        $productStub = $this->createMock(\Code\Product::class);
+        $productStub->method('getName')->willReturn('Product 01');
+        $productStub->method('getPrice')->willReturn(200);
+        $productStub->method('getSlug')->willReturn('product-01');
+
+        return $productStub;
     }
 }
