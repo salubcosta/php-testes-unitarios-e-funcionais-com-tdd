@@ -6,9 +6,11 @@ class Cart
 {
     private $products = [];
 
-    public function addProduct(Product $product)
+    public function addProduct($product, $log = null)
     {
         $this->products[] = $product;
+
+        if($log) $log->log('Adicionando produto no carrinho');
 
         return $this;
     }
