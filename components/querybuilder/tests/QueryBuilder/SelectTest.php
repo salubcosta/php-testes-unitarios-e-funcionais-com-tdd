@@ -29,7 +29,22 @@ class SelectTest extends TestCase
 
     public function testIfQueryIsGeneratedWithWhereConditions()
     {
-        $query = $this->select->where('name', '=', 'Product 01', 'concat');
-        $this->assertEquals("SELECT * FROM `products` WHERE name = 'Product 01'", $query->getSql());
+        $query = $this->select->where('name', '=', ':name', 'concat');
+        $this->assertEquals("SELECT * FROM `products` WHERE name = :name", $query->getSql());
+    }
+
+    public function testIfQueryAllowUsAddMoreConditionsInOurQueryWithWhere()
+    {
+        $query = $this->select->where('name', '=', ':name')
+                              ->where('price', '>=', ':price');
+
+        $this->assertEquals("SELECT * FROM `products` WHERE name = :name AND price >= :price", $query->getSql());
+    }
+
+    public function testIfQueryIsGeneratedWithOrderBy()
+    {
+        $query = $this->select->orderBy('name', 'DESC');
+        
+        $this->assertEquals("SELECT * FROM `products` ORDER BY name DESC", $query->getSql());
     }
 }
