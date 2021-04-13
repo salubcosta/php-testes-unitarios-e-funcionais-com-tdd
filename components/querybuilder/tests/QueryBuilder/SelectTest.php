@@ -47,4 +47,17 @@ class SelectTest extends TestCase
         
         $this->assertEquals("SELECT * FROM `products` ORDER BY name DESC", $query->getSql());
     }
+
+    public function testIfQueryIsGeneratedWithLimit()
+    {
+        $query = $this->select->limit(0, 15);
+
+        $this->assertEquals("SELECT * FROM `products` LIMIT 0, 15", $query->getSql());
+    }
+
+    public function testIfQueryIsGeneratedWithJoinsConditions()
+    {
+        $query = $this->select->join('INNER JOIN', 'colors', 'products.id', '=', 'colors.product_id');
+        $this->assertEquals("SELECT * FROM `products` INNER JOIN colors ON products.id = colors.product_id", $query->getSql());
+    }
 }
