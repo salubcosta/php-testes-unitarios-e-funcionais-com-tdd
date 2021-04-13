@@ -7,6 +7,8 @@ class Select
     private $query;
     private $where;
     private $orderBy;
+    private $limit;
+    private $join;
 
     public function __construct($table)
     {
@@ -32,8 +34,26 @@ class Select
         return $this;
     }
 
+    public function limit($skip, $take)
+    {
+        $this->limit = " LIMIT {$skip}, {$take}";
+
+        return $this;
+    }
+
+    public function join($joinType, $table, $foreignKey, $operator, $referenceColumn, $concat = 'AND')
+    {
+        if(!$this->join) {
+            $this->join .= " {$joinType} {$table} ON {$foreignKey} {$operator} {$referenceColumn}";
+        } else {
+            $this->join .= " {$concat} {$foreignKey} {$operator} {$referenceColumn}";
+        }
+
+        return $this;
+    }
+
     public function getSql()
     {
-        return $this->query . $this->where . $this->orderBy;
+        return $this->query . $this->join . $this->where . $this->orderBy . $this->limit;
     }
 }
