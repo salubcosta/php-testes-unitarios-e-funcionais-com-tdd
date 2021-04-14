@@ -30,6 +30,7 @@ class SelectTest extends TestCase
     public function testIfQueryIsGeneratedWithWhereConditions()
     {
         $query = $this->select->where('name', '=', ':name', 'concat');
+        
         $this->assertEquals("SELECT * FROM `products` WHERE name = :name", $query->getSql());
     }
 
@@ -58,6 +59,14 @@ class SelectTest extends TestCase
     public function testIfQueryIsGeneratedWithJoinsConditions()
     {
         $query = $this->select->join('INNER JOIN', 'colors', 'products.id', '=', 'colors.product_id');
+        
         $this->assertEquals("SELECT * FROM `products` INNER JOIN colors ON products.id = colors.product_id", $query->getSql());
+    }
+
+    public function testIfQueryWithSelectedFieldsIsGeneratedWithSuccess()
+    {
+        $query = $this->select->select('name', 'price');
+
+        $this->assertEquals("SELECT name, price FROM `products`", $query->getSql());
     }
 }
