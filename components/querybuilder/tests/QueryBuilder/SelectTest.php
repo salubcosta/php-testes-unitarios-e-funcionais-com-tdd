@@ -69,4 +69,15 @@ class SelectTest extends TestCase
 
         $this->assertEquals("SELECT name, price FROM `products`", $query->getSql());
     }
+
+    public function testIfSelectQueryIsGeneratedWithMoreJoinsClausele()
+    {
+        $sql = "SELECT name, created_at FROM `products` INNER JOIN colors co ON co.product_id = products.id AND co.teste_id = products.teste_id LEFT JOIN categories ca ON ca.id = products.category_id WHERE id = :id";
+        $query = $this->select->select('name', 'created_at')
+                              ->where('id', '=', ':id')
+                              ->join('INNER JOIN', 'colors co', 'co.product_id', '=', 'products.id')
+                              ->join('INNER JOIN', 'colors co', 'co.teste_id', '=', 'products.teste_id', 'AND')
+                              ->join('LEFT JOIN', 'categories ca', 'ca.id', '=', 'products.category_id');
+        $this->assertEquals($sql, $query->getSql());
+    }
 }
