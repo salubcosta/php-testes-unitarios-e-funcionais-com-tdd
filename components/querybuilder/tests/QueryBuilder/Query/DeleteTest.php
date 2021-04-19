@@ -1,8 +1,6 @@
 <?php
 
-use PhpParser\Node\Name;
-
-namespace CodeTests\QueryBuilder;
+namespace CodeTests\QueryBuilder\Query;
 
 use PHPUnit\Framework\TestCase;
 use Code\QueryBuilder\Delete;
