@@ -3,7 +3,7 @@
 namespace CodeTests\QueryBuilder\Query;
 
 use PHPUnit\Framework\TestCase;
-use Code\QueryBuilder\Update;
+use Code\QueryBuilder\Query\Update;
 
 class UpdateTest extends TestCase
 {

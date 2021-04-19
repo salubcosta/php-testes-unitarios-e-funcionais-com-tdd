@@ -3,7 +3,7 @@
 namespace CodeTests\QueryBuilder\Query;
 
 use PHPUnit\Framework\TestCase;
-use Code\QueryBuilder\Delete;
+use Code\QueryBuilder\Query\Delete;
 
 class DeleteTest extends TestCase
 {

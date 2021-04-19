@@ -4,7 +4,7 @@ namespace CodeTests\QueryBuilder\Query;
 
 use PHPUnit\Framework\TestCase;
 
-use Code\QueryBuilder\Select;
+use Code\QueryBuilder\Query\Select;
 
 class SelectTest extends TestCase
 {
